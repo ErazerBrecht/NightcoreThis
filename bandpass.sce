@@ -4,7 +4,7 @@ sin_100Hz = 2*sin(2*%pi*700*t);
 sin_1000Hz = 2*sin(2*%pi*1000*t);
 sin_5000Hz = 2*sin(2*%pi*5000*t);
 testsign = sin_100Hz + sin_1000Hz + sin_5000Hz;
-[LD_coeff, amplitude, frequentie] = wfir('lp',100,[750/16000 0],'hm',[0 0]);
+[LD_coeff, amplitude, frequentie] = wfir('bp',100,[800/16000, 2000/16000],'hm',[0 0]);
 LD_polynoom = poly(LD_coeff, 'z', 'coeff');
 LD_functie = horner(LD_polynoom, 1/%z);
 LD_lineair_system = syslin('d', LD_functie);
@@ -23,4 +23,4 @@ plot(t, LD_output, 'r');
 subplot(313);
 plot(t, testsign)
 plot(t, LD_output, 'r');
-plot(t, sin_100Hz, 'g');
+plot(t, sin_5000Hz, 'g');
