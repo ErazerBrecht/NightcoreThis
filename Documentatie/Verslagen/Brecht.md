@@ -1,14 +1,5 @@
-#ESP8266
+#SD kaart
 
-Wat is er niet gelukt?
+#Arduino code
 
-Wat had het kunnen worden?
-
-#RF24 
-(Uitleg, bibliotheken, .....)
-
-#RaspPI code 
-(RF24, Tee, Tail, ...)
-
-#NodeRED
-(Werking, code)
+#Lijm
