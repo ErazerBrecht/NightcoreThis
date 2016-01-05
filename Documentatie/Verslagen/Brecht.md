@@ -50,4 +50,20 @@ Daarna heb ik geprobeerd om de FIR filter toe te voegen. Dit is niet gelukt, zel
 
 Ik had hier nog wel wat zaken op kunnen testen, maar omdat ik zelf niet 100% zeker was dat de FIR bibliotheek werkte, ik heb ik dit niet meer gedaan. Ik had eigenlijk zelf een FIR filter bibliotheek moeten maken, waarin ik zelf een convolutie maakte. Ik betwijfel echter of ik dit efficiënt zelf kan maken. Maar dit hadden we nog moeten proberen.
 
+##Echo
+Dezelfde persoon had ook een voorbeeld gemaakt om een echo toe te voegen. Deze code was zeer goed gedocumenteerd en is eigenlijk vrij simpel! 
+
+TODO: Wat uitleg
+
+Ik heb zijn code nog aangepast zodanig we niet meer werken met een instelbare delay. Ook de knop om de delay aan en uit te zetten hadden wij niet nodig. </br>
+De belangrijkste aanpassing die ik nog gedaan heb, is werken met een extra delay. Zodanig de echo "verder" klinkt. Nu wordt deze nog 2 keer herhaald (origineel maar 1 keer), dus hoor je dezelfde sample 3 keer. 
+
+##Teensy!?
+De Cortex M3 van de Arduino heeft een beperkte ADC met "maar" een resolutie van 12 bit. Ook heeft de M3 geen hardware DSP aan boord. Zijn opvolger de Cortex M4 heeft een 16 bit ADC en wel hardware DSP aan boord. Dit zou dus een veel geschiktere µcontroller zijn om met audio te werken.
+
+De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakkelijk FFT's mee uit tevoeren, en dan kan het echte werk beginnen. Bekijk zeker het onderstaande filmpje (in de link), wat ze daar allemaal maken is eigenlijk wat we nodig hebben en de moeilijkheid is beperkt!
+
+[Playing with Audio, Teensy](http://www.pjrc.com/teensy/td_libs_Audio.html)
+
+
 #Lijm
