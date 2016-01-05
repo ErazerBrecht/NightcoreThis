@@ -7,7 +7,7 @@
 
 ###Uitleg over het schema
 
-####[IC LM386](https://www.google.com)
+####[IC LM386]http://www.biltek.tubitak.gov.tr/gelisim/elektronik/dosyalar/6/LM386.pdf)
 
 De IC is een vermogen versterker die gebruikt wordt om kleine audio signalen te versterken met een kleinde voedingsspanning.
 De interne gain van de IC is standaard 20 maar kan verhoogd worden tot liefst 200 door een RC schakeling toe te voegen aan de 1 en 8 pin.
