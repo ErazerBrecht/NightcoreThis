@@ -6,9 +6,23 @@ Ik was eerst aan het denken om letterlijk een harde schijf eraan te hangen, ik h
 
 Een beter voorbeeld van flash geheugen kun je niet voorzinnen, het wordt alom gebruikt in smartphones, fototoestellen, ... Ook is het vrij goedkoop. Toevallig hadden we op het school [één SD kaart "reader"](http://cdn1.bigcommerce.com/server800/a8995/products/561/images/1378/SDCardReader_2_1760__92122.1383080948.1280.1280.jpg?c=2) liggen, wij hebben deze direct getest en waren hier heel tevreden mee.
 
-TODO
+Een SD card bestaat dus uit flash geheugen. We kunnen dit geheugen via SPI aansturen. SPI is een bus die vaak gebruikt wordt in digitale systemen voor korte communicatie. Het is samen met I²C de bekenste communicatiebus voor communicatie tussen IC's (korte afstand).
+
+We hebben tijdens het vak IoT leren werken met SPI, ik ga de volledige werking van SPI hier niet uit te doeken doen. Hiervoor verwijs ik graag naar het vak IoT (theorie + Labo 1 + Labo 2).
+
+Omdat we gebruik zullen maken van Arduino, zullen wij geen native C++ moeten programmeren. We zullen dus niet manueel alle registers moeten instellen. Maar we zullen gebruik maken van een bibliotheek. Dit is één van de grote voordelen van de Arduino wereld.
+
+#SD Card Reader
+
+![SD <-> Arduino](http://i.imgur.com/kxKXH3W.jpg)
+
+De SS pin (ookwel CS pin genoemd) mag je vrij kiezen. Dit kan elke digitale pin zijn. Wij hebben voor '4' gekozen. De rest van de pinnen zijn de voeding en de typische SPI pinnen. Deze pinnen liggen vast!
 
 #Arduino code
+We hebben gebruik gemaakt van de [*Simple Audio Tuturial*](https://www.arduino.cc/en/Tutorial/SimpleAudioPlayer).
+Alles staat hier zeer goed in uitgelegd. 
+
+TODO
 
 ##TODO (Via SD kaart)
 
@@ -56,7 +70,7 @@ Dezelfde persoon had ook een voorbeeld gemaakt om een echo toe te voegen. Deze c
 TODO: Wat uitleg
 
 Ik heb zijn code nog aangepast zodanig we niet meer werken met een instelbare delay. Ook de knop om de delay aan en uit te zetten hadden wij niet nodig. </br>
-De belangrijkste aanpassing die ik nog gedaan heb, is werken met een extra delay. Zodanig de echo "verder" klinkt. Nu wordt deze nog 2 keer herhaald (origineel maar 1 keer), dus hoor je dezelfde sample 3 keer. 
+De belangrijkste aanpassing die ik nog gedaan heb, is werken met een extra delay. Zodanig de echo "verder" klinkt. Nu wordt deze nog 2 keer herhaald (origineel maar 1 keer), dus hoor je dezelfde sample 3 keer. De code vind je ook terug bij het verslag. Ook heb ik de schaal aangepast zodanig je de delay kunt invullen als ms. Zo staat hij bij ons ingesteld op 250ms.
 
 ##Teensy!?
 De Cortex M3 van de Arduino heeft een beperkte ADC met "maar" een resolutie van 12 bit. Ook heeft de M3 geen hardware DSP aan boord. Zijn opvolger de Cortex M4 heeft een 16 bit ADC en wel hardware DSP aan boord. Dit zou dus een veel geschiktere µcontroller zijn om met audio te werken.
