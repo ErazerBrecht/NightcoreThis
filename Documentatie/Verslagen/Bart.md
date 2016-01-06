@@ -1,6 +1,6 @@
 #Versterker
-*Om onze Arduino (DAC) niet stuk te maken hebben we een versterkingsschakeling gebouwd*
-*De Arduino wou stuk kunnen gaan zonder deze schakeling omdat de max. stroom door de DAC maar 20mA kan/mag bedragen*
+*Om onze Arduino (DAC) niet stuk te maken hebben we een versterkingsschakeling gebouwd.*
+*De Arduino zou stuk kunnen gaan zonder deze schakeling omdat de max. stroom door de DAC maar 20mA kan/mag bedragen*
 
 ##Schema
 ![schema](http://img.bhs4.com/b5/8/b5880d6404b791d21a95a238d8213884b2c2ce9f_large.jpg)
