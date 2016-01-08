@@ -18,9 +18,16 @@ IIR Verschilvergelijking
 De liedjes die we gaan filteren in scilab zullen  de extentie .wav hebben. Dit om de eenvoudige rede dat scilab een functie heeft genaamd Wavread. Hiermee kan je makelijk Wav files uitlezen. MP3 uitlezen in scilab is veel moeilijker, hier zijn speciale encoders nodig. We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
 [testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); met in y de gesampelde data, Fs de samplerate, bits het aantal bits gebruikt per sample om de data te encoderen. Audacity® is gratis, open source, cross-platform software voor het opnemen en bewerken van geluiden en onmisbaar bij het verwezelijken van dit project. Om te beginnen hebben we Audacity gebruikt om de liedjes die we gebruikten om te vormen van mp3 naar wav bestanden. Zo konden we ook het uitgangssignaal van scilab vergelijken met de orginele mp3 file. In Audacity is het ook mogelijk om te filteren, zo konden we de resultaten van onze Scilab filter vergelijken met de filter van audacity.
 
+foto
 
+tot slot hebben we audacity gebruikt om onze .wav file van stereo naar mono om te vormen. Doen we dit niet krijgen we dit niet krijgen we volgende fout:"Wrong size for argument: Incompatible dimensions." bij het aanroepen van de playsnd(); functie. Dit omdat een met de Wavread() ingelezen stereo-muziek bestand zal bestaan uit twee Array's met samples één voor elk kanaal. De playsnd() functie begint de file af te spelen bij het starten van het programma.
 
-Zoals al eerder aangehaald in het Hoofdstuk over filters, is Wavread de functie in Scilab die het mogelijk maakt om een .wav file in te laden in Scilab.
 
 ##Praktisch
 om de uniformiteit te bewaren Gebruiken we ook hier .wav files.
+
+
+
+probleem ALs we een stereo file inladen dubbele array
+probleem afspeelsnelheid verdubbeld wegens mono -stereo toch maar één kanaal
+
