@@ -9,10 +9,18 @@ FIR Verschilvergelijking
 
 IIR Verschilvergelijking
 ![FIR Verschilvergelijking.jpg](/Documentatie/Foto's/IIR Verschilvergelijking.jpg)
-;cdcp,cd
-Het werkingsprincipe van een FIR-filter komt overeen met het bepalen van het gemiddelde in de vorige waarden die voorzien zijn van gewichten met een factor bk. Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan de IIR- filter om dezelfde eigenschappen te kunnen bekomen. In tegenstelling tot de IIR-filter heeft de FIR-filter Lineaire faseresponse, wat een enorm voordeel. Niet Lineaire faseresponse wilt namenlijk zeggen dat er vervorming zal optreden. Magnitude en fase kunnen bijd de FIR onafhankelijk van elkaar bepaald worden.
+
+ Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan de IIR- filter om dezelfde eigenschappen te kunnen bekomen. In tegenstelling tot de IIR-filter heeft de FIR-filter Lineaire faseresponse, wat een enorm voordeel. Niet Lineaire faseresponse wilt namenlijk zeggen dat er vervorming zal optreden. Magnitude en fase kunnen bijd de FIR onafhankelijk van elkaar bepaald worden.
 
 
-#Wave generatie
+#Wav generatie
+##Scilab
+De liedjes die we gaan filteren in scilab zullen  de extentie .wav hebben. Dit om de eenvoudige rede dat scilab een functie heeft genaamd Wavread. Hiermee kan je makelijk Wav files uitlezen. MP3 uitlezen in scilab is veel moeilijker, hier zijn speciale encoders nodig. We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
+[testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); met in y de gesampelde data, Fs de samplerate, bits het aantal bits gebruikt per sample om de data te encoderen. Audacity® is gratis, open source, cross-platform software voor het opnemen en bewerken van geluiden en onmisbaar bij het verwezelijken van dit project. Om te beginnen hebben we Audacity gebruikt om de liedjes die we gebruikten om te vormen van mp3 naar wav bestanden. Zo konden we ook het uitgangssignaal van scilab vergelijken met de orginele mp3 file. In Audacity is het ook mogelijk om te filteren, zo konden we de resultaten van onze Scilab filter vergelijken met de filter van audacity.
 
 
+
+Zoals al eerder aangehaald in het Hoofdstuk over filters, is Wavread de functie in Scilab die het mogelijk maakt om een .wav file in te laden in Scilab.
+
+##Praktisch
+om de uniformiteit te bewaren Gebruiken we ook hier .wav files.
