@@ -20,7 +20,7 @@ De liedjes die we gaan filteren in scilab zullen  de extentie .wav hebben. Dit o
 
 foto
 
-tot slot hebben we audacity gebruikt om onze .wav file van stereo naar mono om te vormen. Doen we dit niet krijgen we dit niet krijgen we volgende fout:"Wrong size for argument: Incompatible dimensions." bij het aanroepen van de playsnd(); functie. Dit omdat een met de Wavread() ingelezen stereo-muziek bestand zal bestaan uit twee Array's met samples één voor elk kanaal. De playsnd() functie begint de file af te spelen bij het starten van het programma.
+tot slot hebben we audacity gebruikt om onze .wav file van stereo naar mono om te vormen. Doen we dit niet krijgen we dit niet krijgen we volgende fout:"Wrong size for argument: Incompatible dimensions." bij het aanroepen van de playsnd(); functie. Dit omdat een met de Wavread() ingelezen stereo-muziek bestand zal bestaan uit twee Array's met samples één voor elk kanaal. De playsnd() functie begint de file af te spelen bij het starten van het programma. Verder werkte onze filter ook niet meer. Deze wist niet hoe hij 2 array's moest behandelen. Na de signalen te hebben omgevormd werkt de filter feiloos.
 
 
 ##Praktisch
