@@ -20,10 +20,4 @@ De liedjes die we gaan filteren in scilab zullen  de extentie .wav hebben. Dit o
 
 
 ##Praktisch
-om de uniformiteit te bewaren Gebruiken we ook hier .wav files.
-
-
-
-probleem ALs we een stereo file inladen dubbele array
-probleem afspeelsnelheid verdubbeld wegens mono -stereo toch maar één kanaal
-
+Om de uniformiteit te bewaren Gebruiken we ook hier .wav files. Om dat de afspeel snelheid van onze sd kaart dubbel zo hoog moest zijn als stereo muziek afspelen. moet op voorhand beslist worden of we mono of stereo gaan gebruiken. Omdat we toch maar een kanaal speakers hebben en in scilab ook van mono gebruik maken was de keuze voor Mono snel gemaakt.
