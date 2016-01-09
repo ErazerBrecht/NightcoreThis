@@ -116,6 +116,17 @@ void loop() {
 ```
 
 ##Filteren
+Onze volgende doel was uiteraard filteren. De zoektoch naar een bibliotheek was moeilijk. Iedereen dit aan filtering deed, deed dit met analoge waardes. Wij samplen (nog) niet. 
+
+Uiteindelijk hadden we er één die het testen waard is.
+
+> [Filter code](http://forum.arduino.cc/index.php?topic=44412.msg321510#msg321510)
+
+Ik voeg een for loop toe om elke 'short' uit te lezen van de buffer array. In deze for voer ik de filter uit. Maar ik hoor geen geluid meer...
+
+Nu wil ik dit debuggen door Serial.println() maar er gebeurd niets meer. Dan heb ik de filter weg gedaan, enkel de Serial.println() laten staan, we zien nu sampels verschijnen. Maar ook geen geluid meer. Mijn conclusie Serial.println() is te traag, we zijn niet instaat te debuggen laat staan de filter te laten werken.
+
+Omdat er bar weinig informatie over te vinden is besluit ik om hiermee te stoppen.
 
 ##Samplen
 We hadden eerst besloten dit niet te doen. Voor wel één goede reden. De Arduino DUE sampelt te snel. Deze Arduino werkt op een klokfrequentie van 84Mhz. Toen we begonnen aan het samplen van een audio signaal, kwamen we al vrij snel tot de conclusie dat de Arduino te snel aan het samplen was. Dit ging er probleem veroorzaken laten. Wij zouden nooit op deze snelheid geluid kunnen afspelen. En het vergt vooral veel rekenkracht en geheughen om op zo'n snelle frequentie te werken.
