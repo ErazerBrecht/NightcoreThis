@@ -32,6 +32,9 @@ plot(t, LD_output, 'r');
 Bandpass 
 ![Bandpass](http://i.imgur.com/t5cUKDE.jpg?1 "Bandpass")
 
+spectrum
+![Bandpass](http://i.imgur.com/j79e04v.jpg?1 "Bandpass")
+
 Laagdoorlaat 
 ![Laagdoorlaat](http://i.imgur.com/WIYrNHZ.jpg?1 "Laagdoorlaat")
 
