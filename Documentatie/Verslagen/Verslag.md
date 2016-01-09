@@ -11,10 +11,10 @@ In dit dossier vindt u de schriftelijke neerslag van en de extra informatie van 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 
 ## Doelstellingen
-* Opbouwen van filters binnen scilab
-* Sampelen van geluid met arduino
-* Versnellen of vertragen van geluid met arduino en scilab
-* Toevoegen van echo aan geluid met arduino
+* Opbouwen van filters binnen Scilab
+* Sampelen van geluid met Arduino
+* Versnellen of vertragen van geluid met Arduino en Scilab
+* Toevoegen van echo aan geluid met Arduino
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de IoT wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
