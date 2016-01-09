@@ -1,0 +1,3 @@
+set_sample_rate	KEYWORD2
+adc0_setup	KEYWORD2
+dac0_setup	KEYWORD2
