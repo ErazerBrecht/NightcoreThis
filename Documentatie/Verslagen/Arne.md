@@ -3,7 +3,7 @@ Als deel van onze opdracht was om onze filters op te bouwen in het programma Sci
 
 De opdracht bestond er uit om 3 filters op te bouwen. Een laagdoorlaat filter die enkel signalen tot 750 Hz doorlaat en alle hogere signalen eruit filtert. Verder ook een bandpass filter die van 800 Hz tot 2kHz filtert. Als laatste ook een hoog doorlaat filter die van vanaf 2kHz de signalen door laat.
 
-### code
+### Code
 We zullen deze kort onze code even stap voor stap overlopen. Fss is de bitrate van het nummer dat we inladen. Speed zegt hoeveel versnelt het muziekstuk moet worden afgespeeld. Wavread is de functie in Scilab die het mogelijk maakt om een .wav file in te laden in Scilab. 
 ```Matlab
 Fss = 16000;
