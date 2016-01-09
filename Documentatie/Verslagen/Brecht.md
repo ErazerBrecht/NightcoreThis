@@ -19,12 +19,103 @@ Omdat we gebruik zullen maken van Arduino, zullen wij geen native C++ moeten pro
 De SS pin (ookwel CS pin genoemd) mag je vrij kiezen. Dit kan elke digitale pin zijn. Wij hebben voor '4' gekozen. De rest van de pinnen zijn de voeding en de typische SPI pinnen. Deze pinnen liggen vast!
 
 #Arduino code
+Voor we verder gingen met geluid afspelen, hebben we eerst geprobeerd om een simpele tekstbestand te lezen/schrijven naar de SD card. Dit hebben we snel opgelost. De werking was zeer makkelijk, waardoor we zeker waren dat we met de SD kaart verder gingen. Na een snelle test om te bepalen hoe snel de SD card waren we helemaal zeker. De SD card wordt snel genoeg uitgelezen om geluid af te kunnen spelen!
+
+Hierna was het ons doel om een WAV file die af te spelen met de Arduino. We gebruikten Audacity om de WAV file te genereren. Als luidsprekers hebben we 2 boxen van 4 Ohm in serie gebruikt. Deze zijn gedoneerd door Nick den Ridder.
 We hebben gebruik gemaakt van de [*Simple Audio Tuturial*](https://www.arduino.cc/en/Tutorial/SimpleAudioPlayer).
 Alles staat hier zeer goed in uitgelegd. 
 
-TODO
+##Play (Via SD kaart)
+We hebben extra commentaar toegevoegd. Veel extra kan hier niet over gezegd worden. De code spreekt helemaal voor zich!
 
-##TODO (Via SD kaart)
+Ook hebben we zo ingesteld dat we het bestand 30% sneller afspelen, dan normaal. Dit is zo indien je een mono wav bestand gebruikt. Staat uitgelegd in de code:
+
+```c
+/*
+  Simple Audio Player
+
+  Demonstrates the use of the Audio library for the Arduino Due
+
+  Hardware required :
+  SD card reader with CS on pin 4
+  A sound file named "test.wav" in the root directory of the SD card
+  An audio amplifier to connect to the DAC0 and ground
+  A speaker to connect to the audio amplifier
+
+  Original by Massimo Banzi September 20, 2012
+  Modified by Scott Fitzgerald October 19, 2012
+  Changed for NightCoreThis by Brecht Carlier January 6, 2016
+
+  This example code is in the public domain
+  http://www.arduino.cc/en/Tutorial/SimpleAudioPlayer
+
+*/
+
+//Include libraries
+//SD => Reading SD card
+//SPI => Communicate with SD card
+//Audio => Playing WAV files on DAC
+#include <SD.h>
+#include <SPI.h>
+#include <Audio.h>
+
+void setup() {
+  //Start UART @ 115200 baud rate
+  Serial.begin(115200);
+
+  //Setup SD-card
+  Serial.print("Initializing SD card...");
+  //"Start" SD Card => SPI intitializing, ...
+  //Pin 4 is the CS pin
+  if (!SD.begin(4)) {
+    Serial.println(" failed!");
+    return;
+  }
+  Serial.println(" done.");
+  // hi-speed SPI transfers
+  SPI.setClockDivider(4);
+
+  //Mono: 44100Khz 
+  //Stereo: 88200 sample rate
+  //100 mSec of prebuffering.
+  //1.3 => Play it faster => 30%
+  Audio.begin(1.3 * 44100, 100);
+}
+
+void loop() {
+
+  //Open wave file from sdcard
+  File myFile = SD.open("test.wav");
+  if (!myFile) {
+    //If the file didn't open, print an error and stop
+    Serial.println("Error opening test.wav");
+    while (true);
+  }
+
+  const int S = 1024; //Number of samples to read in block
+  short buffer[S];    //Init buffer
+
+  Serial.println("Playing");
+  //Until the file is not finished
+  while (myFile.available()) {
+    //Read from the file into buffer
+    myFile.read(buffer, sizeof(buffer));
+    //Prepare samples, save them in the buffer
+    //S = Numver of samples
+    //1024 = Volume   
+    Audio.prepare(buffer, S, 1024);
+    //Feed samples to audio, read S amount of samples from the buffer and write it on the DAC buffer => Sound!!!
+    Audio.write(buffer, S);
+  }
+  
+  myFile.close();
+
+  Serial.println("End of file. Thank you for listening!");
+  while (true);   //Infinite loop, program stopped!
+}
+```
+
+##Filteren
 
 ##Samplen
 We hadden eerst besloten dit niet te doen. Voor wel één goede reden. De Arduino DUE sampelt te snel. Deze Arduino werkt op een klokfrequentie van 84Mhz. Toen we begonnen aan het samplen van een audio signaal, kwamen we al vrij snel tot de conclusie dat de Arduino te snel aan het samplen was. Dit ging er probleem veroorzaken laten. Wij zouden nooit op deze snelheid geluid kunnen afspelen. En het vergt vooral veel rekenkracht en geheughen om op zo'n snelle frequentie te werken.
@@ -44,7 +135,9 @@ We stellen dus de juiste register in.
 
 We moeten dus PRESCAL op 255 instellen, deze bevind zich in het ADC Mode Register (43.7.2). Bit 15 tot en met 7 komt is de PRESCAL.
 
->  0x400C0004 |= TODO
+> 0x400C0004 |= 0xFF << 8;
+
+Dit is het 'commando' dat we gebruikt hebben hiervoor. Zet laatste 8 bit (FF) op 1 en schuif het dan 8 plaatsen op naar links. Het zou kunnen dat dit niet volledig het juiste commando is. Mijn C++ kennis is niet zo hoog (wat ik jammer vind). En toen we dit deden was Dhr. M. Luyts ons aan het helpen, waarvoor nog eens dank!
 
 Nadat we dit gedaan hadden, hebben we opnieuw getest maar ging het eigenlijk nog altijd veel te snel. Omdat onze C++ kennis niet bijster groot is hebben we besloten om dit verloopig te stoppen. De ADC heeft ook maar 12 bit, we vonden het niet meer de moeite om te samplen!
 
@@ -54,12 +147,12 @@ Tijdens de kerstperiode heb ik toch nog iets interssant gevonden. Ik heb namelij
 > [RT Audio](http://www.rtaudio.co.uk/liboverview/)
 
 ##Samplen
-Er stond een voorbeeld op hoe we moesten samplen en daarna terug afspelen. We hebben dit getest en dit werkt perfect in het mogelijke. De ADC van de Arduino is maar 12 bit. Dus de geluidskwaliteit is niet optimaal. Ook worden alle sampels onder nul gezien als 0. We verliezen dus veel belangrijke informatie.
+Er stond een voorbeeld op hoe we moesten samplen en daarna terug afspelen. We hebben dit getest en dit werkt perfect in het mogelijke. De ADC van de Arduino is maar 12 bit. Dus de geluidskwaliteit is niet optimaal. Ook worden alle sampels onder nul gezien als 0. We verliezen dus veel belangrijke informatie. De ADC kan immers geen negatieve voltages omvormen.
 
-We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 3V. We hadden hier echter geen tijd meer voor. 
+We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 3V. We hadden hier echter geen tijd meer voor... 
 De code vindt u in dit project
 
-##Filteren
+##Filteren realtime
 Daarna heb ik geprobeerd om de FIR filter toe te voegen. Dit is niet gelukt, zelfde probleem als bij de SD card. Het filter algortime werkt niet snel genoeg. Ik heb code wat moeten aanpassen om de filter er in te krijgen. Ik kan uiteraard niet filteren in de ISR. Maar ook in de loop zelf duurt het te lang.
 
 Ik had hier nog wel wat zaken op kunnen testen, maar omdat ik zelf niet 100% zeker was dat de FIR bibliotheek werkte, ik heb ik dit niet meer gedaan. Ik had eigenlijk zelf een FIR filter bibliotheek moeten maken, waarin ik zelf een convolutie maakte. Ik betwijfel echter of ik dit efficiënt zelf kan maken. Maar dit hadden we nog moeten proberen.
