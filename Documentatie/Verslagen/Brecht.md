@@ -184,4 +184,9 @@ De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakke
 [Playing with Audio, Teensy](http://www.pjrc.com/teensy/td_libs_Audio.html)
 
 
-#Lijm
+#Lijm (Taakverdeling)
+Ik (Brecht Carlier) heb ervoor gezorgd dat ons team bleef draaien, door de taken de verdelen. In het begin hielp ik waar nodig was. Zo heb ik de versterker helpen meebouwen. En heb ik Arne geholpen met de SD card uitelezen.
+
+Hierna heb ik me gefocuust op het Arduino verhaal, afspelen van muziek, versnellen, samplen, ...
+
+Ik heb ook minieem nog wat geholpen met de filters in Scilab
