@@ -48,7 +48,7 @@ void setup() {
 void loop() {
 
   // open wave file from sdcard
-  File myFile = SD.open("test.wav");
+  File myFile = SD.open("test2.wav");
   if (!myFile) {
     // if the file didn't open, print an error and stop
     Serial.println("error opening test.wav");
