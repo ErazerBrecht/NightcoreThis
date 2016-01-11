@@ -53,12 +53,10 @@ omvormen van Z-coeff naar 1/z coeff
 
 
 LD_functie = horner(LD_polynoom, 1/%z);
-
 aangeven dat we werken met discrete signalen
 
 
 LD_lineair_system = syslin('d', LD_functie);
-
 testen werking van de filter
 
 
