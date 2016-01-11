@@ -21,15 +21,18 @@ Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan
     LD_functie = horner(LD_polynoom, 1/%z);
     LD_lineair_system = syslin('d', LD_functie);
     LD_output = flts(testsign, LD_lineair_system);
+    
+
+[LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
+
+Bepalen van de transfert functie van de filter, maken van een polynoom
 
 
 LD_coeff
 time domain filter coefficients
 
-
 amplitude
 frequency domain filter response on the grid fr
-
 
 frequentie
 Frequency grid
@@ -45,10 +48,23 @@ Frequency grid
   
   
 LD_polynoom = poly(LD_coeff, 'z', 'coeff');
+
+omvormen van Z-coeff naar 1/z coeff
+
+
 LD_functie = horner(LD_polynoom, 1/%z);
+
+aangeven dat we werken met discrete signalen
+
+
 LD_lineair_system = syslin('d', LD_functie);
+
+testen werking van de filter
+
+
 LD_output = flts(testsign, LD_lineair_system);
 
+filteren via scilab met funtie flts()
 
 
 #Wav generatie
