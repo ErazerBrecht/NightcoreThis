@@ -224,6 +224,33 @@ playsnd(testsign,samplespeed); //afspelen van het audio-signaal met echo
 // playsnd(testsign,samplespeed * 1.6); //afspelen van het audio-signaal met echo in nightcore mode
 ```
 
+## Arduino
+Voor dit project zullen wij de Arduino DUE gebruiken. Dit is één van de meest uitgebreide Arduino's. Dit ook de eerste keer dat wij werken met een Arduino die gebaseerd is op de ARM intsructieset en niet op de AVR instructieset. De Arduino DUE beschikt over een Cortex M3 als microcontroller.
+
+Indien je de hardware vergelijkt met een Aduino UNO, is het verschil gigantisch!
+
+![Arduino SPEC](http://i.imgur.com/HKOozfg.png)
+
+Arduino ADC == Arduino Mega, </br>
+Arduino Ethernet == Arduino UNO </br>
+
+De DUE heeft 2 belangrijke voordelen voor ons audio project. Namelijk:
+* ADC -> 12 bits
+* DAC
+
+
+####ADC
+Analog to Digital convertor. Ondertussen moet ik denk ik niet meer uitleggen wat dit is. Zie leerstof (Digitale Systemen 2, Microcontrollers 3, Embedded Systems 5, ...).
+
+Kort gezegd de ADC vormt een analoog signaal (oneinidge mogelijkheden) om tot een digitaal signaal (einidge mogelijkheden, discreet). Dit doet de ADC door het inkomend signaal te sampelen. Een belangrijke opmerking, het signaal dat gesampeld wordt mag maar een maximum frequentie hebben die half zo groot is als de sample frequentie. Indien dit niet het geval is zullen er alaisingen optreden, dit zal leiden tot vervorming!
+
+Onze DAC op de Arduino DUE heeft een 12 bit bereik, dit betekend dus 4096 stappen. Dit is een pak groter dan het 10 bit bereik op de UNO / MEGA (1024 stappen). Echter zal later blijken dat dit nog steeds te laag is voor deftig gelui
+
+####DAC
+Een DAC is het tegenovergesteled van een ADC! Dit zal dus onze digitale data omvormen in overeenkomstige analoge spanningen! Dit is één van de 1ste Arduino's die dit kan. Bij de UNO / MEGA kon je enkel gebruik maken van de PWM uitgangen om een 'analoog' signaal te stimuleren. Dit is uiteraard geen analoog signaal. Een DAC is een absolute must om muziek af te spelen!
+
+Onze Arduino heeft 2 DAC uitgangen! We zouden dus theoretisch stereo kunnen spelen, we hebben dit echter niet gedaan. De DAC kan niet veel spanning leveren en kan ook niet tegen hoge stromen. Omdat we niet willen dat de Arduino dus stuk gaat maken we gebruik van een eindversterker (zie verder).
+
 ## SD kaart
 We moesten sowieso extra geheugen hebben op onze Arduino om aan muziekverwerkingen te kunnen doen. Er zijn talloze manieren waarop we het geheugen van de Arduino kunnen uitbreiden. Zo hadden we ervoor kunnen kiezen om het werkgeheugen van de Arduino te kunnen uitbreiden. Maar dit heeft weinig nut, we moeten muziek opslaan niet verwerken. Toch niet in de zin dat wij het volledig muziekstuk in ons werkgeheugen moeten plaatsen. Dit zou inefficiënt zijn, een betere werkwijze is in blokken het muziekstuk te sturen naar het RAM geheugen dan te verwerken (Von Neuman cyclus). Om dan uiteindelijk het geluid om je uitput te "zetten" in ons geval onze DAC. 
 Dus waarom zouden we dan SRAM geheugen bij plaatsen (n.v.d.r. het RAM geheugen van de DUE is al vrij groot)? We moesten juist ons datageheughen (flash) uitbreiden...
@@ -236,7 +263,7 @@ Een SD card bestaat dus uit flash geheugen. We kunnen dit geheugen via SPI aanst
 
 We hebben tijdens het vak IoT leren werken met SPI, ik ga de volledige werking van SPI hier niet uit te doeken doen. Hiervoor verwijs ik graag naar het vak IoT (theorie + Labo 1 + Labo 2).
 
-Omdat we gebruik zullen maken van Arduino, zullen wij geen native C++ moeten programmeren. We zullen dus niet manueel alle registers moeten instellen. Maar we zullen gebruik maken van een bibliotheek. Dit is één van de grote voordelen van de Arduino wereld.
+Omdat we gebruik zullen maken van Arduino, zullen wij onze SPI verbinding niet in native C++ moeten programmeren. We zullen dus niet manueel alle registers moeten instellen. Maar we zullen gebruik maken van een bibliotheek. Zo wordt de functionaliteit weg ge encapsuleerd. Dit is één van de grote voordelen van de Arduino wereld!
 
 ## SD Card Reader
 
