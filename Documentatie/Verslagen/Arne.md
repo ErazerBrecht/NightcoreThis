@@ -71,7 +71,7 @@ Voor de bandpass filter zal de lijn code er zo uit zien.
 ```
 
 ### taakverdeling
-Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze ontworpen en getest! Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
+Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze opgebouwd en getest. Ook heb ik onderzoek gedaan naar het sampelen met de Arduino Due. In het begin leek dit een eenvoudige opgave maar na nader onderzoek zijn we tot de conclusie gekomen dat de sampel frequentie van de Due te hoog ligt. Om de sampel frequentie omlaag te doen heb je een ontzettend goede C kennis nodig. Deze hadden we spijtig genoeg niet in onze groep. Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
 
 
 
