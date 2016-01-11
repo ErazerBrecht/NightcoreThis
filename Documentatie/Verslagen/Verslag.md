@@ -25,7 +25,9 @@ Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 Het is de bedoeling dat we SciLab gebruiken als simulatie omgeving. Dit zal dus onze eerste taak zijn, hierna moeten we onze logica inbouwen in onze Arduino.
 
 ## Naamgeving
-TODO
+De USP van ons project was het versnellen van de audio (smurfenstemmetje). Nightcore is een term die wordt gebruikt om aan te duiden dat muziek versneld wordt afgespeeld. Zo zijn van veel liedjes een Nightcore versie te vinden op bijvoorbeeld YouTube.
+
+We hebben ons project dus ook zo gedoopt!
 
 ## Fir filter
 
@@ -419,7 +421,7 @@ Tijdens de kerstperiode heb ik toch nog iets interssant gevonden. Ik heb namelij
 Er stond een voorbeeld op hoe we moesten samplen en daarna terug afspelen. We hebben dit getest en dit werkt perfect in het mogelijke. De ADC van de Arduino is maar 12 bit. Dus de geluidskwaliteit is niet optimaal. Ook worden alle sampels onder nul gezien als 0. We verliezen dus veel belangrijke informatie. De ADC kan immers geen negatieve voltages omvormen.
 
 We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 4V. We hebben dit niet gerealiseerd, wat dus zorgt voor stevige vervorming. Maar we hadden hier echter geen tijd meer voor... 
-De code vindt u in dit project! TODO Link!
+De code vindt u in dit project! U vind deze hier: Arduino/Audio_Sampling/Audio_Sampling.ino!
 
 ## Filteren realtime
 Daarna heb ik geprobeerd om de FIR filter toe te voegen. Dit is niet gelukt, zelfde probleem als bij de SD card. Het filter algortime werkt niet snel genoeg. Ik heb code wat moeten aanpassen om de filter er in te krijgen. Ik kan uiteraard niet filteren in de ISR. Maar ook in de loop zelf duurt het te lang.
@@ -512,7 +514,7 @@ Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed g
 ### Stijn Schrauwen
 Als eerste heb ik geprobeerd om wav bestanden uit te lezen in SciLab. Ik heb moeten opzoeken hoe we dit konden doen en hoe we bepaalde problemen optloste (stacksize)
 
-+Later werd ik bekroond tot Audacity kenner en vormde stereo mp3 files om naar mono wav bestanden. Verder filterde ik deze ook in audacity om te kunnen vergelijken met de scilab filtering. Verder heb ik 3 spectrum analysers gemaakt één voor de LD, één voor de BP en één voor de HD. Verder hielp ik de andere en sprong bij waar nodig. 
+Later werd ik bekroond tot Audacity kenner en vormde stereo mp3 files om naar mono wav bestanden. Verder filterde ik deze ook in audacity om te kunnen vergelijken met de scilab filtering. Verder heb ik 3 spectrum analysers gemaakt één voor de LD, één voor de BP en één voor de HD. Verder hielp ik de andere en sprong bij waar nodig. 
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de embedded wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
