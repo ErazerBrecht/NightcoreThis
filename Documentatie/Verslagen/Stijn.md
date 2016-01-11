@@ -16,24 +16,32 @@ Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan
 
 
 
-[LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
+    [LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
+    LD_polynoom = poly(LD_coeff, 'z', 'coeff');
+    LD_functie = horner(LD_polynoom, 1/%z);
+    LD_lineair_system = syslin('d', LD_functie);
+    LD_output = flts(testsign, LD_lineair_system);
+
 
 LD_coeff
 time domain filter coefficients
 
+
 amplitude
 frequency domain filter response on the grid fr
+
 
 frequentie
 Frequency grid
 
+
   Parameters van wfir()
-  • ‘lp’ : laagdoorlaatfilter
-  • 80 : orde filter
-  • [750/Fss, 0] : bandbreedte (tussen  (750/16000)Hz en 0 Hz;
+  * ‘lp’ : laagdoorlaatfilter
+  * 80 : orde filter
+  * [750/Fss, 0] : bandbreedte (tussen  (750/16000)Hz en 0 Hz;
   750 >>> periodes per seconde 16000samples per seconde. 750/16000 = cut off frequentie 
-  • ‘hm’ : hamming window
-  • [0 0] parameters voor hamming window
+  * ‘hm’ : hamming window
+  * [0 0] parameters voor hamming window
   
   
 LD_polynoom = poly(LD_coeff, 'z', 'coeff');
