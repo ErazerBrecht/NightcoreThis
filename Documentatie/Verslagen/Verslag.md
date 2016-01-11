@@ -1,4 +1,4 @@
-﻿# NightCore Project 3
+﻿# NightCore (Project 3)
 * Brecht Carlier
 * Stijn Schrauwen
 * Bart Kerstens
@@ -23,6 +23,9 @@ Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 * Toevoegen van echo aan geluid met Silab en Arduino
 
 Het is de bedoeling dat we SciLab gebruiken als simulatie omgeving. Dit zal dus onze eerste taak zijn, hierna moeten we onze logica inbouwen in onze Arduino.
+
+## Naamgeving
+TODO
 
 ## Fir filter
 
@@ -244,7 +247,9 @@ Analog to Digital convertor. Ondertussen moet ik denk ik niet meer uitleggen wat
 
 Kort gezegd de ADC vormt een analoog signaal (oneinidge mogelijkheden) om tot een digitaal signaal (einidge mogelijkheden, discreet). Dit doet de ADC door het inkomend signaal te sampelen. Een belangrijke opmerking, het signaal dat gesampeld wordt mag maar een maximum frequentie hebben die half zo groot is als de sample frequentie. Indien dit niet het geval is zullen er alaisingen optreden, dit zal leiden tot vervorming!
 
-Onze DAC op de Arduino DUE heeft een 12 bit bereik, dit betekend dus 4096 stappen. Dit is een pak groter dan het 10 bit bereik op de UNO / MEGA (1024 stappen). Echter zal later blijken dat dit nog steeds te laag is voor deftig gelui
+Onze DAC op de Arduino DUE heeft een 12 bit bereik, dit betekend dus 4096 stappen. Dit is een pak groter dan het 10 bit bereik op de UNO / MEGA (1024 stappen). Echter zal later blijken dat dit nog steeds te laag is voor deftig geluid.
+
+Het andere grote nadeel is dat we niet kunnen instellen dat de ADC van -2,5 tot 2,5V sampelt. De ADC kan enkel positieve signalen verwerken, dit kunnen we enkel oplossen in hardware.
 
 ####DAC
 Een DAC is het tegenovergesteled van een ADC! Dit zal dus onze digitale data omvormen in overeenkomstige analoge spanningen! Dit is één van de 1ste Arduino's die dit kan. Bij de UNO / MEGA kon je enkel gebruik maken van de PWM uitgangen om een 'analoog' signaal te stimuleren. Dit is uiteraard geen analoog signaal. Een DAC is een absolute must om muziek af te spelen!
@@ -413,8 +418,8 @@ Tijdens de kerstperiode heb ik toch nog iets interssant gevonden. Ik heb namelij
 ## Samplen
 Er stond een voorbeeld op hoe we moesten samplen en daarna terug afspelen. We hebben dit getest en dit werkt perfect in het mogelijke. De ADC van de Arduino is maar 12 bit. Dus de geluidskwaliteit is niet optimaal. Ook worden alle sampels onder nul gezien als 0. We verliezen dus veel belangrijke informatie. De ADC kan immers geen negatieve voltages omvormen.
 
-We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 3V. We hadden hier echter geen tijd meer voor... 
-De code vindt u in dit project
+We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 4V. We hebben dit niet gerealiseerd, wat dus zorgt voor stevige vervorming. Maar we hadden hier echter geen tijd meer voor... 
+De code vindt u in dit project! TODO Link!
 
 ## Filteren realtime
 Daarna heb ik geprobeerd om de FIR filter toe te voegen. Dit is niet gelukt, zelfde probleem als bij de SD card. Het filter algortime werkt niet snel genoeg. Ik heb code wat moeten aanpassen om de filter er in te krijgen. Ik kan uiteraard niet filteren in de ISR. Maar ook in de loop zelf duurt het te lang.
