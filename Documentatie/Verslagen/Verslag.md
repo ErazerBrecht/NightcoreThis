@@ -509,6 +509,21 @@ Pin 7: verbonden met ground via condensator
 Pin 8: verbonden met pin 1 met een RC-kring (variabele weerstand):
 *door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
 
+
+##Demo's (YouTube)
+
+[Play music, Normal speed](https://www.youtube.com/watch?v=q9lKbdKJirA)
+
+[Nightcore, teamsong](https://www.youtube.com/watch?v=0UCWw8W3y9I)
+
+[Speed Up Bohemian Rhapsody #Nightcore](https://www.youtube.com/watch?v=2uFcuZs4ggQ)
+
+[One drum, generates many drums (echo)](https://www.youtube.com/watch?v=j5lYSqZsr-o)
+
+[Here you can easily hear repeat of sound (delay / echo)](https://www.youtube.com/watch?v=WjyrNeLHRTE)
+
+[Echo realtime with spoken text](https://www.youtube.com/watch?v=CMMCjqbBAdI)
+
 ##Taakverdeling
 ### Bart Kerstens
 * opbouwen van versterker
