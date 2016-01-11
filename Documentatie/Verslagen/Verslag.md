@@ -431,10 +431,24 @@ Ik had hier nog wel wat zaken op kunnen testen, maar omdat ik zelf niet 100% zek
 ## Echo
 Dezelfde persoon had ook een voorbeeld gemaakt om een echo toe te voegen. Deze code was zeer goed gedocumenteerd en is eigenlijk vrij simpel! 
 
-TODO: Wat uitleg
+Zoals al ergens is uitgelegd is een echo eigenlijk niets anders dan een delay verzwakt opnieuw afspelen over de huidige sampels. Dit is dan ook wat we gedaan hebben in Arduino.
 
 Ik heb zijn code nog aangepast zodanig we niet meer werken met een instelbare delay. Ook de knop om de delay aan en uit te zetten hadden wij niet nodig. </br>
 De belangrijkste aanpassing die ik nog gedaan heb, is werken met een extra delay. Zodanig de echo "verder" klinkt. Nu wordt deze nog 2 keer herhaald (origineel maar 1 keer), dus hoor je dezelfde sample 3 keer. De code vind je ook terug bij het verslag. Ook heb ik de schaal aangepast zodanig je de delay kunt invullen als ms. Zo staat hij bij ons ingesteld op 250ms.
+
+
+We zetten de index van de array (44 * aantal ms) posities vooruit (optellen). Deze index zal dus ooit in de toekomst uitgelezen worden. In deze toekomstige postitie zetten we het huidige signaal gedeeld door een getal (verzwakken). We tellen er ook de huidge waarde bij op. Dit kan bijvoorbeeld van een andere delay zijn is sowieso niet de vorige ingelezn waarde want na elke read wordt die op nul gezet (zie volledige code). 
+
+Elke keer als een nieuwe sample wordt opgeslagen wordt deze opgeteld met de waarde die al hierin zat aka onze delay van x aantal samples gelezen. Indien buffer nu gelezen wordt zit hier de nieuwe waarde in plus alle delays! We hebben echo.
+
+```c
+    delayloc = readloc+(44*(delaysamps));                   // 44*1000 = 44000 +- max delay of 1s
+    if (delayloc > 44099) delayloc = delayloc-44100;        // reset just like writeloc, but subtracts the full buffer length, as the delayloc references readloc
+    buff [delayloc] = (SigIn/delayVol) + buff[delayloc];    // assigns an attenuated delay into the buffer 
+    delayloc = readloc+2*(44*(delaysamps));                 // Second echo (2 times the delay)! 
+    if (delayloc > 44099) delayloc = delayloc-44100;        // reset just like writeloc, but subtracts the full buffer length, as the delayloc references readloc
+    buff [delayloc] = (SigIn/4*delayVol) + buff[delayloc];  // assigns an attenuated delay into the buffer 
+```
 
 ## Teensy!?
 De Cortex M3 van de Arduino heeft een beperkte ADC met "maar" een resolutie van 12 bit. Ook heeft de M3 geen hardware DSP aan boord. Zijn opvolger de Cortex M4 heeft een 16 bit ADC en wel hardware DSP aan boord. Dit zou dus een veel geschiktere µcontroller zijn om met audio te werken.
