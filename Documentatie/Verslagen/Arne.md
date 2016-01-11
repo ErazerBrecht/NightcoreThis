@@ -14,7 +14,7 @@ Speed = 1.3; //how fast the song will be played
 ```
 
 De volgende stap is om maar 1 kanaal van het audio signaal op te slaan (audio is stereo). Hierna doen we een berekening voor het plotten van ons test signaal in functie van de sample frequentie.
-Hierna volgt het eigenlijke filteren. Ik ga hier niet te diep op in gaan maar we gebruiken het type FIR filter en hebben en 80ste orde voor laag doorlaat en 100ste orde voor bandpass en highpass filter. Als laatste plotten we het oorspronkelijke en het gefilterde wave signaal. [750/Fss, 0] wilt zeggen tot waar we filteren. Hier moed een verhouding komen die kleiner is dan 0.5 en om het ons gemakkelijk te maken hebben we dit in een formule gegoten. Zo kunnen we de gewenste frequentie invullen en moeten we de verhouding niet zelf berekenen.
+Hierna volgt het eigenlijke filteren. Ik ga hier niet te diep op in gaan maar we gebruiken het type FIR filter en hebben en 80ste orde voor laag doorlaat en 100ste orde voor bandpass en highpass filter. Als laatste plotten we het oorspronkelijke en het gefilterde wave signaal. [750/Fss, 0] wilt zeggen tot waar we filteren. Hier moet een verhouding komen die kleiner is dan 0.5 en om het ons gemakkelijk te maken hebben we dit in een formule gegoten. Zo kunnen we de gewenste frequentie invullen en moeten we de verhouding niet zelf berekenen.
 ```Matlab
 //filterontwerp HP met een orde van 100 die filterd met een fc 2050
 [LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
@@ -62,12 +62,12 @@ Om een hoog of bandpass filter te maken moeten we maar 1 lijn code veranderen.
 ```
 Voor de hoog doorlaat zal deze lijn er zo uit zien (Opgepast er staat hier bp van bandpass maar het is de hoog doorlaat filter. Volgens de opdracht mag het signaal maar tot 8kHz gaan en dit kan enkel met een bandpass filter).
 ```Matlab
-[LD_coeff, amplitude, frequentie] = wfir('bp',100,[2050/Fss, 0.5],'hm',[0 0]);
+[HD_coeff, amplitude, frequentie] = wfir('bp',100,[2050/Fss, 0.5],'hm',[0 0]);
 ```
 
 Voor de bandpass filter zal de lijn code er zo uit zien.
 ```Matlab
-[LD_coeff, amplitude, frequentie] = wfir('bp',100,[800/Fss, 2000/Fss],'hm',[0 0]);
+[BD_coeff, amplitude, frequentie] = wfir('bp',100,[800/Fss, 2000/Fss],'hm',[0 0]);
 ```
 
 
