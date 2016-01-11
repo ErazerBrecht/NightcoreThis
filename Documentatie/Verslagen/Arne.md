@@ -70,7 +70,8 @@ Voor de bandpass filter zal de lijn code er zo uit zien.
 [BD_coeff, amplitude, frequentie] = wfir('bp',100,[800/Fss, 2000/Fss],'hm',[0 0]);
 ```
 
-
+### taakverdeling
+Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze ontworpen en getest! Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
 
 
 
