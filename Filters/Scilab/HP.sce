@@ -7,14 +7,14 @@ Speed = 1.3;
 testsign = testsign(1,:);
 t = [1:1:length(testsign)]*1/Fs;
 
-[LD_coeff, amplitude, frequentie] = wfir('bp',100,[2050/Fss, 0.5],'hm',[0 0]);
-LD_polynoom = poly(LD_coeff, 'z', 'coeff');
-LD_functie = horner(LD_polynoom, 1/%z);
-LD_lineair_system = syslin('d', LD_functie);
-LD_output = flts(testsign, LD_lineair_system);
+[HD_coeff, amplitude, frequentie] = wfir('bp',100,[2050/Fss, 0.5],'hm',[0 0]);
+HD_polynoom = poly(LD_coeff, 'z', 'coeff');
+HD_functie = horner(HD_polynoom, 1/%z);
+HD_lineair_system = syslin('d', HD_functie);
+HD_output = flts(testsign, HD_lineair_system);
 
 plot(t, testsign)
-plot(t, LD_output, 'r');
+plot(t, HD_output, 'r');
 
-playsnd(LD_output,Speed*Fss);
-wavwrite(LD_output, Speed*Fss ,'SCI/modules/sound/demos/'+'yolohp.wav');
+playsnd(HD_output,Speed*Fss);
+wavwrite(HD_output, Speed*Fss ,'SCI/modules/sound/demos/'+'yolohp.wav');
