@@ -5,7 +5,7 @@
 * Arne Schoonvliet
  
 ## Inleiding
-In ons derde jaar op AP Hogeschool wordt er van ons verwacht een digitale filtermaken. Wij maken deze in groepjes van vier. 
+In ons derde jaar op AP Hogeschool wordt er van ons verwacht een digitale filter te maken. Wij maken deze in groepjes van vier. 
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
 In ons project hebben we een aantal doelstellingen. Een zeer belangrijke hiervan is het plannen en het verdelen van taken. We werken in een groep van vier. Hier moet zeker de nodige planning gebeuren willen we tot een succesvolle project komen. We leren hier bepaalde technieken voor die ons hierbij kunnen helpen!
@@ -17,10 +17,12 @@ In dit dossier vindt u de schriftelijke neerslag van en de extra informatie van 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 
 ## Doelstellingen
-* Opbouwen van filters binnen Scilab
+* Opbouwen van filters binnen Scilab en Arduino.
 * Sampelen van geluid met Arduino
-* Versnellen of vertragen van geluid met Arduino en Scilab
-* Toevoegen van echo aan geluid met Arduino
+* Versnellen of vertragen van geluid met Scilab en Arduino
+* Toevoegen van echo aan geluid met Silab en Arduino
+
+Het is de bedoeling dat we SciLab gebruiken als simulatie omgeving. Dit zal dus onze eerste taak zijn, hierna moeten we onze logica inbouwen in onze Arduino.
 
 ## Fir filter
 
@@ -38,7 +40,7 @@ IIR Verschilvergelijking
 
 Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan de IIR- filter om dezelfde eigenschappen te kunnen bekomen. In tegenstelling tot de IIR-filter heeft de FIR-filter een lineaire faseresponse, wat een enorm voordeel is. Niet lineaire faseresponse wilt namenlijk zeggen dat er vervorming zal optreden. Magnitude en fase kunnen beide bij de FIR onafhankelijk van elkaar bepaald worden.
 
-
+Hier een klein woordje uitleg hoe de FIR filter werkt in SciLab. Later wordt er dieper ingegaan op onze verschillende filters.
 
     [LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
     LD_polynoom = poly(LD_coeff, 'z', 'coeff');
@@ -52,71 +54,80 @@ Bepalen van de transfert functie van de filter, maken van een polynoom
 
 
 LD_coeff
-time domain filter coefficients
+Time domain filter coefficients
 
 amplitude
-frequency domain filter response on the grid fr
+Frequency domain filter response on the grid fr
 
 frequentie
 Frequency grid
 
 
   Parameters van wfir()
-  * ‘lp’ : laagdoorlaatfilter
-  * 80 : orde filter
-  * [750/Fss, 0] : bandbreedte (tussen  (750/16000)Hz en 0 Hz;
-  750 >>> periodes per seconde 16000samples per seconde. 750/16000 = cut off frequentie 
+  * ‘lp’: laagdoorlaatfilter
+  * 80: orde filter
+  * [750/Fss, 0]: Bandbreedte (tussen 750 en 0 Hz) => Moet omgegeven worden in functie van samplefrequentie. Vandaar de deling!
+  * 750Hz >>> 750 periodes per seconde <==> 16000 samples per seconde. 750/16000 = cut off frequentie 
   * ‘hm’ : hamming window
   * [0 0] parameters voor hamming window
   
   
 LD_polynoom = poly(LD_coeff, 'z', 'coeff');
-omvormen van Z-coeff naar 1/z coeff
+Omvormen van Z-coeff naar 1/z coeff
 
 LD_functie = horner(LD_polynoom, 1/%z);
-aangeven dat we werken met discrete signalen
+Aangeven dat we werken met discrete signalen
 
 LD_lineair_system = syslin('d', LD_functie);
-testen werking van de filter
+Testen werking van de filter
 
 LD_output = flts(testsign, LD_lineair_system);
-filteren via scilab met funtie flts()
+Filteren via scilab met funtie flts()
 ```
 
 
 ## Wav generatie
 ### Scilab
-De liedjes die we gaan filteren in Scilab zullen  de extentie .wav hebben. Dit om de eenvoudige rede dat scilab een functie heeft genaamd Wavread. Hiermee kan je makelijk wav files uitlezen. MP3 uitlezen in scilab is veel moeilijker, hier zijn speciale encoders voor nodig (mp3 is ook geen vrije licentie). We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
+De liedjes die we gaan filteren in Scilab zullen de extentie .wav hebben. Dit om de eenvoudige rede dat SciLab een functie heeft genaamd Wavread(). Hiermee kan je makelijk wav files uitlezen. Waarom geeft SciLab (en later ook onze Audio bibliotheek) de voorkeur aan .wab? </br>
+Het *Waveform Audio File Format* wordt bijna altijd gebruikt bij ongecomprimeerde data, dit is de reden waarom het zo simpel is. We moeten niet meer aan decompressie doen voor we de sampels kunnen uitlezen!
+
+MP3 uitlezen in SciLab is veel moeilijker, hier zijn speciale encoders voor nodig (mp3 is ook geen vrije licentie). We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
+
+Wij hebben de sound map van SciLab gebruikt om zeker geen complicaties te hebben.
 
 >[testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); 
 
 Met in 'testsin' de gesampelde data, 'Fs' de samplerate en 'bits' het aantal bits gebruikt per sample om de data te encoderen. 
 
-Audacity® is gratis, open source, cross-platform software voor het opnemen en bewerken van geluiden en onmisbaar bij het verwezelijken van dit project. Om te beginnen hebben we Audacity gebruikt om de liedjes die we gebruikten om te vormen van mp3 naar wav bestanden. Zo konden we ook het uitgangssignaal van scilab vergelijken met de orginele mp3 file. In Audacity is het ook mogelijk om te filteren, zo konden we auditief de resultaten van onze Scilab filter vergelijken met de filter van Audacity. Tot slot hebben we Audacity gebruikt om onze .wav file van stereo naar mono om te vormen. Doen we dit niet krijgen we volgende fout: "Wrong size for argument: Incompatible dimensions." bij het aanroepen van de playsnd(); functie. Dit omdat een met de Wavread() ingelezen stereo-muziek bestand zal bestaan uit twee Array's met samples één voor elk kanaal. De playsnd() functie begint de file af te spelen bij het starten van het programma. Verder werkte onze filter ook niet meer. Deze wist niet hoe hij 2 array's moest behandelen. Na de signalen te hebben omgevormd werkt de filter feiloos. We hebben voor de zekerheid toch nog de 'tweede' array van samples (stereo kanaal) programatisch verwijderd.
+Audacity® is gratis, open source, cross-platform software voor het opnemen en bewerken van geluiden en onmisbaar bij het verwezelijken van dit project. Om te beginnen hebben we Audacity gebruikt om de liedjes die we gebruikten om te vormen van mp3 naar wav bestanden. Zo konden we ook het uitgangssignaal van SciLab vergelijken met de orginele .mp3 file. In Audacity is het ook mogelijk om te filteren, zo konden we auditief de resultaten van onze SciLab filter vergelijken met de filter van Audacity. Tot slot hebben we Audacity gebruikt om onze .wav file van stereo naar mono om te vormen. Doen we dit niet krijgen we volgende fout: "Wrong size for argument: Incompatible dimensions." bij het aanroepen van de playsnd(); functie. Dit omdat een met de Wavread() ingelezen stereo-muziek bestand zal bestaan uit twee Array's met samples één voor elk kanaal. De playsnd() functie begint de file af te spelen bij het starten van het programma. Verder werkte onze filter ook niet meer. Deze wist niet hoe hij 2 array's moest behandelen. Na de signalen te hebben omgevormd werkt de filter feiloos. We hebben voor de zekerheid toch nog de 'tweede' array van samples (stereo kanaal) programatisch verwijderd.
 
 > testsign = testsign(1,:);
 
 
 ## Praktisch
-Om de uniformiteit te bewaren gebruiken we ook hier .wav files. Omdat de afspeelsnelheid van onze SD kaart dubbel zo hoog moest zijn als we stereo muziek afspelen, moet op voorhand beslist worden of we mono of stereo gaan gebruiken. Omdat we toch maar een kanaal speakers hebben en in SciLab ook van mono gebruik maken was de keuze voor mono snel gemaakt. De samplefrequentie kon zo vast gezet worden op 44100Hz (i.p.v. 88200Hz)
+Om de uniformiteit en simpliciteit te bewaren gebruiken we ook hier .wav files. Omdat de afspeelsnelheid van onze SD kaart dubbel zo hoog moest zijn als we stereo muziek afspelen, moet op voorhand beslist worden of we mono of stereo gaan gebruiken. Omdat we toch maar een kanaal speakers hebben en in SciLab ook van mono gebruik maken was de keuze voor mono snel gemaakt. De samplefrequentie kon zo vast gezet worden op 44100Hz (i.p.v. 88200Hz).
+
+Deze zou dan moeten veranderen willen we ons geluid versnellen of vertraagd worden, zie later meer!
 
 ## Filter (Scilab)
-Als deel van onze opdracht was om onze filters op te bouwen in het programma Scilab. Je kan dit programma vergelijken met Matlab maar dan open source.
+Als deel van onze opdracht was om onze filters op te bouwen in het programma SciLab. Je kan dit programma vergelijken met Matlab maar dan open source.
 
 De opdracht bestond er uit om 3 filters op te bouwen. Een laagdoorlaat filter die enkel signalen tot 750 Hz doorlaat en alle hogere signalen eruit filtert. Verder ook een bandpass filter die van 800 Hz tot 2kHz filtert. Als laatste ook een hoog doorlaat filter die van vanaf 2kHz de signalen door laat.
 
 ### Code
-We zullen deze kort onze code even stap voor stap overlopen. Fss is de bitrate van het nummer dat we inladen. Speed zegt hoeveel versnelt het muziekstuk moet worden afgespeeld. Wavread is de functie in Scilab die het mogelijk maakt om een .wav file in te laden in Scilab. 
+We zullen deze kort onze code even stap voor stap overlopen. Fss is de bitrate van het nummer dat we inladen. Speed zegt hoeveel versnelt het muziekstuk moet worden afgespeeld. Wavread is de functie in Scilab die het mogelijk maakt om een .wav file in te laden in SciLab. 
+
 ```Matlab
-Fss = 16000; //the bitrate of the song
-Speed = 1.3; //how fast the song will be played
+Fss = 16000; //the bitrate of the song, was determined by our lecturer
+Speed = 1.3; //how fast the song will be played => 1 is normal
 
 //reading the wav (music) file in a matrix
 [testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); 
 ```
 
 De volgende stap is om maar 1 kanaal van het audio signaal op te slaan (audio is stereo). Hierna doen we een berekening voor het plotten van ons test signaal in functie van de sample frequentie.
-Hierna volgt het eigenlijke filteren. Ik ga hier niet te diep op in gaan maar we gebruiken het type FIR filter en hebben en 80ste orde voor laag doorlaat en 100ste orde voor bandpass en highpass filter. Als laatste plotten we het oorspronkelijke en het gefilterde wave signaal. [750/Fss, 0] wilt zeggen tot waar we filteren. Hier moet een verhouding komen die kleiner is dan 0.5 en om het ons gemakkelijk te maken hebben we dit in een formule gegoten. Zo kunnen we de gewenste frequentie invullen en moeten we de verhouding niet zelf berekenen.
+Hierna volgt het eigenlijke filteren. Ik ga hier niet te diep op in gaan (zie boven voor meer uitleg) maar we gebruiken het type FIR filter en hebben en 80ste orde voor laag doorlaat en 100ste orde voor bandpass en highpass filter. Als laatste plotten we het oorspronkelijke en het gefilterde wave signaal. [750/Fss, 0] wilt zeggen tot waar we filteren. Hier moet een verhouding komen die kleiner is dan 0.5 en om het ons gemakkelijk te maken hebben we dit in een formule gegoten. Zo kunnen we de gewenste frequentie invullen en moeten we de verhouding niet zelf berekenen.
+
 ```Matlab
 //filterontwerp HP met een orde van 100 die filterd met een fc 2050
 [LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
@@ -135,6 +146,7 @@ plot(t, testsign)
 //plot gefilterd signaal
 plot(t, LD_output, 'r');
 ```
+
 Hier onder ziet u alle filters met hun wave form en spectrum
 
 Bandpass 
@@ -153,21 +165,26 @@ Spectrum
 ![Hoogdoorlaatspec](http://i.imgur.com/IFFJeDS.jpg?1 "Hoog doorlaat")
 
 Om te horen of onze filter werkt spelen we het gefilterde geluid af en eventueel versneld. Dit is afhankelijk van de ingestelde speed. Als laatste slaan we het gefilterde signaal op in een wav file.
+
 ```Matlab
 playsnd(LD_output,Speed*Fss);
-wavwrite(LD_output, Speed*Fss ,'SCI/modules/sound/demos/'+'yolold.wav');
+wavwrite(LD_output, Speed*Fss ,'SCI/modules/sound/demos/'+'save.wav');
 ```
 
-Om een hoog of bandpass filter te maken moeten we maar 1 lijn code veranderen.
+Om een hoog of bandpass filter te maken moeten we maar 1 lijn code veranderen. En dat is deze lijn (aka we moeten de parameters van onze fitler wijzigen):
+
 ```Matlab
 [LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss 0],'hm',[0 0]);
 ```
+
 Voor de hoog doorlaat zal deze lijn er zo uit zien (Opgepast er staat hier bp van bandpass maar het is de hoog doorlaat filter. Volgens de opdracht mag het signaal maar tot 8kHz gaan en dit kan enkel met een bandpass filter).
+
 ```Matlab
 [HD_coeff, amplitude, frequentie] = wfir('bp',100,[2050/Fss, 0.5],'hm',[0 0]);
 ```
 
 Voor de bandpass filter zal de lijn code er zo uit zien.
+
 ```Matlab
 [BD_coeff, amplitude, frequentie] = wfir('bp',100,[800/Fss, 2000/Fss],'hm',[0 0]);
 ```
@@ -179,7 +196,7 @@ We hebben een echo gemaakt in scilab. Om dit te realiseren lezen we eerst een .w
 [testsign,Fs,bits]=wavread("D:\Programs\scilab-5.5.2\modules\sound\demos\BART2.wav");
 samplespeed = Fs;
 ```
-Vervolgens stellen we wanneer de echo moet beginnen. Deze tijd is regelbaar van 500ms tot 3 000ms. Indien je de echo langer maakt wordt het meer akapella i.p.v. echo. De echotijd wordt dan omgevormd naar seconden en vermenigvuldigd met de samplerate. Dit doen we zodat de echotijd dezelfde blijft ongeacht de samplerate.
+Vervolgens stellen we in wanneer de echo moet beginnen. Deze tijd is regelbaar van 500ms tot 3 000ms. Indien je de echo langer maakt wordt het meer akapella i.p.v. echo. De echotijd wordt dan omgevormd naar seconden en vermenigvuldigd met de samplerate. Dit doen we zodat de echotijd dezelfde blijft ongeacht de samplerate.
 ```
 delay = 1500; // choose the echo time of the sound (ms)
 echotime = [delay/1000] * samplespeed;
@@ -201,6 +218,7 @@ end
 
 Eenmaal alle samples aangepast zijn naar hun variant met echo kunnen we deze afspelen.
 Bovenste speelt met normale snelheid en echo, onderstaande is echto en versneld.
+
 ```
 playsnd(testsign,samplespeed); //afspelen van het audio-signaal met echo 
 // playsnd(testsign,samplespeed * 1.6); //afspelen van het audio-signaal met echo in nightcore mode
@@ -391,13 +409,9 @@ De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakke
 
 [Playing with Audio, Teensy](http://www.pjrc.com/teensy/td_libs_Audio.html)
 
-
-
-
-
 ## Versterker
-*Om onze Arduino (DAC) niet stuk te maken hebben we een versterkingsschakeling gebouwd.*
-*De Arduino zou stuk kunnen gaan zonder deze schakeling omdat de max. stroom door de DAC maar 20mA kan/mag bedragen*
+*Om onze Arduino (DAC) niet stuk te maken hebben we een versterkingsschakeling gebouwd.*</br>
+*De Arduino zou stuk kunnen gaan zonder deze schakeling omdat de max. stroom die de DAC kan leveren maar 20mA mag bedragen*
 
 ### Schema
 ![schema](http://img.bhs4.com/b5/8/b5880d6404b791d21a95a238d8213884b2c2ce9f_large.jpg)
@@ -408,42 +422,43 @@ De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakke
 
 De IC is een vermogen versterker die gebruikt wordt om kleine audio signalen te versterken met een kleine voedingsspanning.
 De interne gain van de IC is standaard 20 maar kan verhoogd worden tot liefst 200 door een RC schakeling toe te voegen aan de 1 en 8 pin.
+
 Door hier gebruik te maken van een potentiometer kunnen we beter de versterking bepalen die gedaan wordt op het audio signaal op de ingang.
 
 De inputs van de IC werken t.o.v. de ground, terwijl de output automatisch gebiased is op half de voedingsspanning.
-De IC bestaat in 4 uitvoeringen met typerend een zeer lage ruiskarakterestiek en werking is een bereik van 4-12V (de 4de uitvoering werkt in een gebied van 5-18V, indien je hierover zou gaan wordt het component te warm en beschadigd).
+De IC bestaat in 4 uitvoeringen met typerend een zeer lage ruiskarakterestiek en werking is een bereik van 4-12V (de 4de uitvoering werkt in een gebied van 5-18V, indien je hierover zou gaan wordt het component te warm en kan dit beschadigen teweeg brengen).
 
 Enkele eigenschappen:
 * Idle stroom van maar 4mA
 * Max. power output van 1.25W bij een 8ohm speaker
-* bandbreedte van 300Khz bij 6V voeding
+* Bandbreedte van 300Khz bij 6V voeding
 
 ![schema](http://i.imgur.com/nlC1tb1.jpg)
 
 #### Schema
 
-pin 1: verbonden met pin 8 met een RC-kring (variabele weerstand):
-*door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
+Pin 1: verbonden met pin 8 met een RC-kring (variabele weerstand):
+*Door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
 
-pin 2: verbonden met ground:
+Pin 2: verbonden met ground:
 *-input naar ground niveau brengen* 
 
-pin 3: verbonden met de variabele weerstand waar het inkomend signaal over staat:
+Pin 3: verbonden met de variabele weerstand waar het inkomend signaal over staat:
 *+input waar we het een fijne instelling kunnen doen via de potentiometer voor het signaal duidelijk op de uitgang te laten horen, eenmaal de instelling gebeurd is moeten we deze weerstand niet meer aanraken*
 
-pin 4: verbonden met ground:
+Pin 4: verbonden met ground:
 *ground niveau van de IC*
 
-pin 5: verbonden met de uitgangsschakeling:
+Pin 5: verbonden met de uitgangsschakeling:
 *uigangsschakeling bestaat uit een RC-kring voor filtering met parallel erover de uitgangsspeaker die in serie staat met een condenstator voor een "bass boost" te verkrijgen en voor de HF-signalen er nog uit te filteren*
 
-pin 6: verbonden met de voeding
+Pin 6: verbonden met de voeding
 *voedingspin van de IC, deze wordt verbonden met een voeding die tussen de 5-12V ligt. Als je deze voeding op 12V zet kan je het volume aan de uitgang luider laten klinken dan als je dit kan met een voeding van 5V (zelfde gain)*
 
-pin 7: verbonden met ground via condensator
+Pin 7: verbonden met ground via condensator
 *Bypass pin van de ic die we verbinden met de ground via een condensator, dit wordt gedaan om het circuit stabiel te houden en om onnodige oscillaties en clipping te vermijden*
 
-pin 8: verbonden met pin 1 met een RC-kring (variabele weerstand):
+Pin 8: verbonden met pin 1 met een RC-kring (variabele weerstand):
 *door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
 
 ##Taakverdeling
@@ -452,9 +467,10 @@ pin 8: verbonden met pin 1 met een RC-kring (variabele weerstand):
 * ontwerpen van echo in scilab
 
 ### Brecht Carlier
-Ik (Brecht Carlier) heb ervoor gezorgd dat ons team bleef draaien, door de taken de verdelen. In het begin hielp ik waar nodig was. Zo heb ik de versterker helpen meebouwen. En heb ik Arne geholpen met de SD card uitelezen.
-
-Hierna heb ik me gefocuust op het Arduino verhaal, afspelen van muziek, versnellen, samplen, ...
+Ik heb ervoor gezorgd dat ons team bleef draaien, door de taken de verdelen (de lijm). In het begin hielp ik waar nodig was. Zo heb ik de versterker helpen meebouwen. Ik heb overal in ons project mijn stempel gedrukt.
+Mijn eerste eigen idee was de SD kaart, ik heb dit samen met Arne Schoonvliet getest. En zo hadden wij al een belangrijke mijlpaal volbracht. Hierna heb ik me gefocuust op het Arduino verhaal, afspelen van muziek, versnellen, samplen, ...
+Dit heeft veel up and downs gehad.
+Ik heb thuis ook de versterker nog weten finetunen. 
 
 Ik heb ook minieem nog wat geholpen met de filters in Scilab
 
@@ -462,14 +478,15 @@ Ik heb ook minieem nog wat geholpen met de filters in Scilab
 Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze opgebouwd en getest. Ook heb ik onderzoek gedaan naar het sampelen met de Arduino Due. In het begin leek dit een eenvoudige opgave maar na nader onderzoek zijn we tot de conclusie gekomen dat de sampel frequentie van de Due te hoog ligt. Om de sampel frequentie omlaag te doen heb je een ontzettend goede C kennis nodig. Deze hadden we spijtig genoeg niet in onze groep. Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
 
 ### Stijn Schrauwen
-Ik werd bekroond tot audacity kenner en vormde stereo mp3 files om naar mono wav bestanden. verder filterde ik deze ook in audacity om te kunnen vergelijken met de praktische en scilab filtering. Verder heb ik 3 spectrum analysers gemaakt voor één voor de LD, één voor de BP en één voor de HD. Verder hielp ik de andere en sprong bij waar nodig.
+Als eerste heb ik geprobeerd om wav bestanden uit te lezen in SciLab. Ik heb moeten opzoeken hoe we dit konden doen en hoe we bepaalde problemen optloste (stacksize)
 
++Later werd ik bekroond tot Audacity kenner en vormde stereo mp3 files om naar mono wav bestanden. Verder filterde ik deze ook in audacity om te kunnen vergelijken met de scilab filtering. Verder heb ik 3 spectrum analysers gemaakt één voor de LD, één voor de BP en één voor de HD. Verder hielp ik de andere en sprong bij waar nodig. 
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de embedded wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
 Omdat we in groep werkten was het belangrijk dat we een goede taakverdeling hadden. Als u naar het resultaat kijkt mag er geconcludeerd worden dat we dit uitstekend gedaan hebben. We hebben ons project afgekregen. We mogen hier zeer trots op zijn! 
 Verder was het ook een zeer leerrijk proces. Ééntje met up en down, iets wat ieder project wel heeft. We hebben leren werken met scilab en onze filters daar met success in opgebouwd. We hebben het echo signaal kunnen maken binnen Arduino en versnellen van het singaal is ook gelukt. Ook hebben we geleerd dat je eerste en ook je tweede en derde idee niet steeds het beste idee is en dat je moet durven veranderen 
-We willen ook graag lector M. Smets bedanken voor de hulp als we die nodig hadden. Zijn ervaring en zijn vindingrijkheid heeft ons zeker af en toe geholpen. 
+We willen ook graag lector M. Smets en P. Vanhoutven bedanken voor de hulp als we die nodig hadden. Hun ervaring heeft ons zeker af en toe geholpen. 
 Het was een leerrijk proces en we kijken uit naar onze bachelor proef.
 
 Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
