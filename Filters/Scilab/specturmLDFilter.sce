@@ -12,7 +12,7 @@ n=size(f,'*');
 figure;
 plot(f,Freq_FFT(1:n));
 
-[LD_coeff, amplitude, frequentie] = wfir('bp',100,[0,750/Fss],'hm',[0 0]);
+[HD_coeff, amplitude, frequentie] = wfir('lp',100,[750/Fss],'hm',[0 0]);
 
 
 plot(frequentie*Fss, amplitude*N, 'r');
