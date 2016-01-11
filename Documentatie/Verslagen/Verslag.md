@@ -17,7 +17,7 @@ Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 * Toevoegen van echo aan geluid met Arduino
 
 ## Conclusie
-De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de IoT wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
+De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de embedded wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
 Omdat we in groep werkten was het belangrijk dat we een goede taakverdeling hadden. Als u naar het resultaat kijkt mag er geconcludeerd worden dat we dit uitstekend gedaan hebben. We hebben ons project afgekregen. We mogen hier zeer trots op zijn! 
 Verder was het ook een zeer leerrijk proces. Ééntje met up en down, iets wat ieder project wel heeft. We hebben leren werken met scilab en onze filters daar met success in opgebouwd. We hebben het echo signaal kunnen maken binnen Arduino en versnellen van het singaal is ook gelukt. Ook hebben we geleerd dat je eerste en ook je tweede en derde idee niet steeds het beste idee is en dat je moet durven veranderen 
 We willen ook graag lector M. Smets bedanken voor de hulp als we die nodig hadden. Zijn ervaring en zijn vindingrijkheid heeft ons zeker af en toe geholpen. 
