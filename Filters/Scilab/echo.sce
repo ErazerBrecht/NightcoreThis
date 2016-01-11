@@ -18,4 +18,6 @@ for n=1:length(testsign),
 end,
  
 end
+
 playsnd(testsign,samplespeed); //afspelen van het audio-signaal met echo 
+// playsnd(testsign,samplespeed * 1.6); //afspelen van het audio-signaal met echo in nightcore mode
