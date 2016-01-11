@@ -1,3 +1,8 @@
+#Taken in het team
+
+* opbouwen van versterker
+* ontwerpen van echo in scilab
+
 #Scilab echo
 
 We hebben een echo gemaakt in scilab. Om dit te realiseren lezen we eerst een .wav file in. Hieruit halen we de samples waar we een echo op gaan toepassen. Deze bevinden zich in *testsign*. Ook is het interessant om de samplerate waarmee het audio bestand origineel afgespeeld wordt er uit te halen. Dit steken we in *samplespeed*.
