@@ -9,7 +9,7 @@ Freq_FFT = abs(fft(testsign));
 //abs take absolute value
 //FFT() kan je een signaal decomposeren in de sinuscompenten waarmee dit signaal is samengesteld.
 
-//f = Fss*(0:(N/2))/N;//geassocieerde frequentie vector
+f = Fss*(0:(N/2))/N;//geassocieerde frequentie vector
 n=size(f,'*');//n krijg de grootte van het aantal samples in f
 figure;//grijze achtergrond
 plot(f,Freq_FFT(1:n));
