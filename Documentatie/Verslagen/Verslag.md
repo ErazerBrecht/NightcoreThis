@@ -462,6 +462,8 @@ Ik heb ook minieem nog wat geholpen met de filters in Scilab
 Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze opgebouwd en getest. Ook heb ik onderzoek gedaan naar het sampelen met de Arduino Due. In het begin leek dit een eenvoudige opgave maar na nader onderzoek zijn we tot de conclusie gekomen dat de sampel frequentie van de Due te hoog ligt. Om de sampel frequentie omlaag te doen heb je een ontzettend goede C kennis nodig. Deze hadden we spijtig genoeg niet in onze groep. Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
 
 ### Stijn Schrauwen
+Ik werd bekroond tot audacity kenner en vormde stereo mp3 files om naar mono wav bestanden. verder filterde ik deze ook in audacity om te kunnen vergelijken met de praktische en scilab filtering. Verder heb ik 3 spectrum analysers gemaakt voor één voor de LD, één voor de BP en één voor de HD. Verder hielp ik de andere en sprong bij waar nodig.
+
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de embedded wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
