@@ -35,7 +35,7 @@ frequency domain filter response on the grid fr
 
 frequentie
 Frequency grid
-```
+
 
   Parameters van wfir()
   * ‘lp’ : laagdoorlaatfilter
@@ -47,23 +47,17 @@ Frequency grid
   
   
 LD_polynoom = poly(LD_coeff, 'z', 'coeff');
-
 omvormen van Z-coeff naar 1/z coeff
 
-
 LD_functie = horner(LD_polynoom, 1/%z);
-
 aangeven dat we werken met discrete signalen
 
-
 LD_lineair_system = syslin('d', LD_functie);
-
 testen werking van de filter
 
-
 LD_output = flts(testsign, LD_lineair_system);
-
 filteren via scilab met funtie flts()
+```
 
 
 #Wav generatie
