@@ -3,7 +3,8 @@
 * Stijn Schrauwen
 * Bart Kerstens
 * Arne Schoonvliet
-## INLEIDING
+ 
+## Inleiding
 In ons derde jaar op AP Hogeschool wordt er van ons verwacht een digitale filtermaken. Wij maken deze in groepjes van vier. 
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
