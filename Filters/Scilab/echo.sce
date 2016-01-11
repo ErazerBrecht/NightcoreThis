@@ -2,7 +2,7 @@
 //binnenhalen van de WAV-file
 [testsign,Fs,bits]=wavread("D:\Programs\scilab-5.5.2\modules\sound\demos\BART2.wav");
 
-samplespeed = 44100;
+samplespeed = Fs;
 delay = 1500; // choose the echo time of the sound (ms)
 echotime = [delay/1000] * samplespeed;
 
