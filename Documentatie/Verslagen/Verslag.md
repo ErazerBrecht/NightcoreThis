@@ -1,4 +1,9 @@
-﻿## INLEIDING
+﻿# NightCore Project 3
+* Brecht Carlier
+* Stijn Schrauwen
+* Bart Kerstens
+* Arne Schoonvliet
+## INLEIDING
 In ons derde jaar op AP Hogeschool wordt er van ons verwacht een digitale filtermaken. Wij maken deze in groepjes van vier. 
 Het doel van dit project is dat onze kennis wordt getest en dat we op zelfstandige basis een project kunnen uitvoeren.
 
@@ -16,7 +21,7 @@ Brecht Carlier, Arne Schoonvliet, Bart Kerstens en Stijn Schrauwen
 * Versnellen of vertragen van geluid met Arduino en Scilab
 * Toevoegen van echo aan geluid met Arduino
 
-#Fir filter
+## Fir filter
 
 Fir filter of voluit *Finite impulse response* filter, is de filter die we gebruiken om in Scilab onze laag, hoog en band doorlaat filter te ontwerpen. Finite impulse response is een term die aangeeft dat de impulsresponsie van een digitale filter eindig is. Bij het aanleggen van een puls op een FIR-filter zal het uitgangssignaal na een bepaalde tijd gelijk aan nul worden; de impulsresponsie is dus eindig. Dit in tegenstelling tot de impulsresponsie van een IIR-filter (infinite impulse response), waar het uitgangssignaal oneindig lang ongelijk aan nul kan blijven. Het voordeel van deze filter is dat er geen terugkoppeling van de output naar de input nodig is, waardoor de filter steeds stabiel is. Dit kan je ook aan hun verschilvergelijkingen zien. Een verschilvergelijking is een rekenregel waarbij de huidige waarde van de outputsequence yk, de huidige waarde van de input xk en alle vorige waarden van de input- en output sequence worden gebruikt (in het geval van de FIR dus enkel de inputsignalen en coëfficiënten bn). De coëfficienten (bn) zijn een reeks waarden waarmee inputsampels (Xk) moeten vermenigvuldigd worden om een outputsequence (yk) te bekomen.
 
@@ -78,8 +83,8 @@ filteren via scilab met funtie flts()
 ```
 
 
-#Wav generatie
-##Scilab
+## Wav generatie
+### Scilab
 De liedjes die we gaan filteren in Scilab zullen  de extentie .wav hebben. Dit om de eenvoudige rede dat scilab een functie heeft genaamd Wavread. Hiermee kan je makelijk wav files uitlezen. MP3 uitlezen in scilab is veel moeilijker, hier zijn speciale encoders voor nodig (mp3 is ook geen vrije licentie). We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
 
 >[testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); 
@@ -91,7 +96,7 @@ Audacity® is gratis, open source, cross-platform software voor het opnemen en b
 > testsign = testsign(1,:);
 
 
-##Praktisch
+## Praktisch
 Om de uniformiteit te bewaren gebruiken we ook hier .wav files. Omdat de afspeelsnelheid van onze SD kaart dubbel zo hoog moest zijn als we stereo muziek afspelen, moet op voorhand beslist worden of we mono of stereo gaan gebruiken. Omdat we toch maar een kanaal speakers hebben en in SciLab ook van mono gebruik maken was de keuze voor mono snel gemaakt. De samplefrequentie kon zo vast gezet worden op 44100Hz (i.p.v. 88200Hz)
 
 ## Filter (Scilab)
@@ -166,10 +171,7 @@ Voor de bandpass filter zal de lijn code er zo uit zien.
 [BD_coeff, amplitude, frequentie] = wfir('bp',100,[800/Fss, 2000/Fss],'hm',[0 0]);
 ```
 
-### taakverdeling
-Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze opgebouwd en getest. Ook heb ik onderzoek gedaan naar het sampelen met de Arduino Due. In het begin leek dit een eenvoudige opgave maar na nader onderzoek zijn we tot de conclusie gekomen dat de sampel frequentie van de Due te hoog ligt. Om de sampel frequentie omlaag te doen heb je een ontzettend goede C kennis nodig. Deze hadden we spijtig genoeg niet in onze groep. Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
-
-#Scilab echo
+## Scilab echo
 
 We hebben een echo gemaakt in scilab. Om dit te realiseren lezen we eerst een .wav file in. Hieruit halen we de samples waar we een echo op gaan toepassen. Deze bevinden zich in *testsign*. Ook is het interessant om de samplerate waarmee het audio bestand origineel afgespeeld wordt er uit te halen. Dit steken we in *samplespeed*.
 ```
@@ -203,7 +205,7 @@ playsnd(testsign,samplespeed); //afspelen van het audio-signaal met echo
 // playsnd(testsign,samplespeed * 1.6); //afspelen van het audio-signaal met echo in nightcore mode
 ```
 
-#SD kaart
+## SD kaart
 We moesten sowieso extra geheugen hebben op onze Arduino om aan muziekverwerkingen te kunnen doen. Er zijn talloze manieren waarop we het geheugen van de Arduino kunnen uitbreiden. Zo hadden we ervoor kunnen kiezen om het werkgeheugen van de Arduino te kunnen uitbreiden. Maar dit heeft weinig nut, we moeten muziek opslaan niet verwerken. Toch niet in de zin dat wij het volledig muziekstuk in ons werkgeheugen moeten plaatsen. Dit zou inefficiënt zijn, een betere werkwijze is in blokken het muziekstuk te sturen naar het RAM geheugen dan te verwerken (Von Neuman cyclus). Om dan uiteindelijk het geluid om je uitput te "zetten" in ons geval onze DAC. 
 Dus waarom zouden we dan SRAM geheugen bij plaatsen (n.v.d.r. het RAM geheugen van de DUE is al vrij groot)? We moesten juist ons datageheughen (flash) uitbreiden...
 
@@ -217,20 +219,20 @@ We hebben tijdens het vak IoT leren werken met SPI, ik ga de volledige werking v
 
 Omdat we gebruik zullen maken van Arduino, zullen wij geen native C++ moeten programmeren. We zullen dus niet manueel alle registers moeten instellen. Maar we zullen gebruik maken van een bibliotheek. Dit is één van de grote voordelen van de Arduino wereld.
 
-#SD Card Reader
+## SD Card Reader
 
 ![SD <-> Arduino](http://i.imgur.com/kxKXH3W.jpg)
 
 De SS pin (ookwel CS pin genoemd) mag je vrij kiezen. Dit kan elke digitale pin zijn. Wij hebben voor '4' gekozen. De rest van de pinnen zijn de voeding en de typische SPI pinnen. Deze pinnen liggen vast!
 
-#Arduino code
+## Arduino code
 Voor we verder gingen met geluid afspelen, hebben we eerst geprobeerd om een simpele tekstbestand te lezen/schrijven naar de SD card. Dit hebben we snel opgelost. De werking was zeer makkelijk, waardoor we zeker waren dat we met de SD kaart verder gingen. Na een snelle test om te bepalen hoe snel de SD card waren we helemaal zeker. De SD card wordt snel genoeg uitgelezen om geluid af te kunnen spelen!
 
 Hierna was het ons doel om een WAV file die af te spelen met de Arduino. We gebruikten Audacity om de WAV file te genereren. Als luidsprekers hebben we 2 boxen van 4 Ohm in serie gebruikt. Deze zijn gedoneerd door Nick den Ridder.
 We hebben gebruik gemaakt van de [*Simple Audio Tuturial*](https://www.arduino.cc/en/Tutorial/SimpleAudioPlayer).
 Alles staat hier zeer goed in uitgelegd. 
 
-##Play (Via SD kaart)
+### Play (Via SD kaart)
 We hebben extra commentaar toegevoegd. Veel extra kan hier niet over gezegd worden. De code spreekt helemaal voor zich!
 
 Ook hebben we zo ingesteld dat we het bestand 30% sneller afspelen, dan normaal. Dit is zo indien je een mono wav bestand gebruikt. Staat uitgelegd in de code:
@@ -320,7 +322,7 @@ void loop() {
 }
 ```
 
-##Filteren
+## Filteren
 Onze volgende doel was uiteraard filteren. De zoektoch naar een bibliotheek was moeilijk. Iedereen dit aan filtering deed, deed dit met analoge waardes. Wij samplen (nog) niet. 
 
 Uiteindelijk hadden we er één die het testen waard is.
@@ -333,7 +335,7 @@ Nu wil ik dit debuggen door Serial.println() maar er gebeurd niets meer. Dan heb
 
 Omdat er bar weinig informatie over te vinden is besluit ik om hiermee te stoppen.
 
-##Samplen
+## Samplen
 We hadden eerst besloten dit niet te doen. Voor wel één goede reden. De Arduino DUE sampelt te snel. Deze Arduino werkt op een klokfrequentie van 84Mhz. Toen we begonnen aan het samplen van een audio signaal, kwamen we al vrij snel tot de conclusie dat de Arduino te snel aan het samplen was. Dit ging er probleem veroorzaken laten. Wij zouden nooit op deze snelheid geluid kunnen afspelen. En het vergt vooral veel rekenkracht en geheughen om op zo'n snelle frequentie te werken.
 
 We waren dit niet van plan gingen dus opzoek naar een methode om de samplerate aan te passen van de ADC. [In de datasheet van de Cortex M3](http://www.atmel.com/images/atmel-11057-32-bit-cortex-m3-microcontroller-sam3x-sam3a_datasheet.pdf), vind je de nodige informatie. 
@@ -357,23 +359,23 @@ Dit is het 'commando' dat we gebruikt hebben hiervoor. Zet laatste 8 bit (FF) op
 
 Nadat we dit gedaan hadden, hebben we opnieuw getest maar ging het eigenlijk nog altijd veel te snel. Omdat onze C++ kennis niet bijster groot is hebben we besloten om dit verloopig te stoppen. De ADC heeft ook maar 12 bit, we vonden het niet meer de moeite om te samplen!
 
-##Onverwachte wending
+## Onverwachte wending
 Tijdens de kerstperiode heb ik toch nog iets interssant gevonden. Ik heb namelijk een bibliotheek gevonden om de sample frequentie in te stellen. Deze bibliotheek stond op een blog waar meedere zaken te lezen waren over "Arduino + Sampling". Een echte aanrader! Jammer dat ik hem zo laat gevonden heb.
 
 > [RT Audio](http://www.rtaudio.co.uk/liboverview/)
 
-##Samplen
+## Samplen
 Er stond een voorbeeld op hoe we moesten samplen en daarna terug afspelen. We hebben dit getest en dit werkt perfect in het mogelijke. De ADC van de Arduino is maar 12 bit. Dus de geluidskwaliteit is niet optimaal. Ook worden alle sampels onder nul gezien als 0. We verliezen dus veel belangrijke informatie. De ADC kan immers geen negatieve voltages omvormen.
 
 We zouden dus nog een schakeling moeten verzinnen die -2 => 2V omzet in 0 => 3V. We hadden hier echter geen tijd meer voor... 
 De code vindt u in dit project
 
-##Filteren realtime
+## Filteren realtime
 Daarna heb ik geprobeerd om de FIR filter toe te voegen. Dit is niet gelukt, zelfde probleem als bij de SD card. Het filter algortime werkt niet snel genoeg. Ik heb code wat moeten aanpassen om de filter er in te krijgen. Ik kan uiteraard niet filteren in de ISR. Maar ook in de loop zelf duurt het te lang.
 
 Ik had hier nog wel wat zaken op kunnen testen, maar omdat ik zelf niet 100% zeker was dat de FIR bibliotheek werkte, ik heb ik dit niet meer gedaan. Ik had eigenlijk zelf een FIR filter bibliotheek moeten maken, waarin ik zelf een convolutie maakte. Ik betwijfel echter of ik dit efficiënt zelf kan maken. Maar dit hadden we nog moeten proberen.
 
-##Echo
+## Echo
 Dezelfde persoon had ook een voorbeeld gemaakt om een echo toe te voegen. Deze code was zeer goed gedocumenteerd en is eigenlijk vrij simpel! 
 
 TODO: Wat uitleg
@@ -381,7 +383,7 @@ TODO: Wat uitleg
 Ik heb zijn code nog aangepast zodanig we niet meer werken met een instelbare delay. Ook de knop om de delay aan en uit te zetten hadden wij niet nodig. </br>
 De belangrijkste aanpassing die ik nog gedaan heb, is werken met een extra delay. Zodanig de echo "verder" klinkt. Nu wordt deze nog 2 keer herhaald (origineel maar 1 keer), dus hoor je dezelfde sample 3 keer. De code vind je ook terug bij het verslag. Ook heb ik de schaal aangepast zodanig je de delay kunt invullen als ms. Zo staat hij bij ons ingesteld op 250ms.
 
-##Teensy!?
+## Teensy!?
 De Cortex M3 van de Arduino heeft een beperkte ADC met "maar" een resolutie van 12 bit. Ook heeft de M3 geen hardware DSP aan boord. Zijn opvolger de Cortex M4 heeft een 16 bit ADC en wel hardware DSP aan boord. Dit zou dus een veel geschiktere µcontroller zijn om met audio te werken.
 
 De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakkelijk FFT's mee uit tevoeren, en dan kan het echte werk beginnen. Bekijk zeker het onderstaande filmpje (in de link), wat ze daar allemaal maken is eigenlijk wat we nodig hebben en de moeilijkheid is beperkt!
@@ -389,22 +391,17 @@ De Teensy (Arduino variant), bevat zo'n M4. Je bent hier zelf instaat om gemakke
 [Playing with Audio, Teensy](http://www.pjrc.com/teensy/td_libs_Audio.html)
 
 
-#Lijm (Taakverdeling)
-Ik (Brecht Carlier) heb ervoor gezorgd dat ons team bleef draaien, door de taken de verdelen. In het begin hielp ik waar nodig was. Zo heb ik de versterker helpen meebouwen. En heb ik Arne geholpen met de SD card uitelezen.
-
-Hierna heb ik me gefocuust op het Arduino verhaal, afspelen van muziek, versnellen, samplen, ...
-
-Ik heb ook minieem nog wat geholpen met de filters in Scilab
 
 
-#Versterker
+
+## Versterker
 *Om onze Arduino (DAC) niet stuk te maken hebben we een versterkingsschakeling gebouwd.*
 *De Arduino zou stuk kunnen gaan zonder deze schakeling omdat de max. stroom door de DAC maar 20mA kan/mag bedragen*
 
-##Schema
+### Schema
 ![schema](http://img.bhs4.com/b5/8/b5880d6404b791d21a95a238d8213884b2c2ce9f_large.jpg)
 
-###Uitleg over het schema
+### Uitleg over het schema
 
 ####[IC LM386](http://www.biltek.tubitak.gov.tr/gelisim/elektronik/dosyalar/6/LM386.pdf)
 
@@ -422,7 +419,7 @@ Enkele eigenschappen:
 
 ![schema](http://i.imgur.com/nlC1tb1.jpg)
 
-####schema
+#### Schema
 
 pin 1: verbonden met pin 8 met een RC-kring (variabele weerstand):
 *door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
@@ -447,6 +444,23 @@ pin 7: verbonden met ground via condensator
 
 pin 8: verbonden met pin 1 met een RC-kring (variabele weerstand):
 *door deze schakeling tussen de gain pinnen van de schakeling te plaatsen kunnen we het volume van de luidspreker aan de uitgang bepalen*
+
+##Taakverdeling
+### Bart Kerstens
+* opbouwen van versterker
+* ontwerpen van echo in scilab
+
+### Brecht Carlier
+Ik (Brecht Carlier) heb ervoor gezorgd dat ons team bleef draaien, door de taken de verdelen. In het begin hielp ik waar nodig was. Zo heb ik de versterker helpen meebouwen. En heb ik Arne geholpen met de SD card uitelezen.
+
+Hierna heb ik me gefocuust op het Arduino verhaal, afspelen van muziek, versnellen, samplen, ...
+
+Ik heb ook minieem nog wat geholpen met de filters in Scilab
+
+### Arne Schoonvliet
+Mijn taak binnen de groep was het opbouwen van de versterker (wat me niet goed gelukt is maar dankzij teamwork hebben we een ontzettend goede versterker gebouwd). Verder heb ik mezelf bezig gehouden met de filters in scilab. Ik heb deze opgebouwd en getest. Ook heb ik onderzoek gedaan naar het sampelen met de Arduino Due. In het begin leek dit een eenvoudige opgave maar na nader onderzoek zijn we tot de conclusie gekomen dat de sampel frequentie van de Due te hoog ligt. Om de sampel frequentie omlaag te doen heb je een ontzettend goede C kennis nodig. Deze hadden we spijtig genoeg niet in onze groep. Verder heb ik geholpen waar nodig. Ik heb mezelf overal binnen het project ingezet.
+
+### Stijn Schrauwen
 
 ## Conclusie
 De bedoeling was dat je leerde samenwerken in groep en leerde plannen van zo een groot project. Dit als voorbereiding voor onze bachelor proef in het derde jaar. Verder was dit ook een onderzoek naar het ontdekken van de embedded wereld. We kunnen concluderen dat dit onderzoek zeer interessant was. 
