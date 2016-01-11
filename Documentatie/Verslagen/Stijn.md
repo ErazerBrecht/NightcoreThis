@@ -15,6 +15,34 @@ IIR Verschilvergelijking
 Een nadeel aan de FIR is dat deze beduidend meer coëfficiënten nodig heeft dan de IIR- filter om dezelfde eigenschappen te kunnen bekomen. In tegenstelling tot de IIR-filter heeft de FIR-filter een lineaire faseresponse, wat een enorm voordeel is. Niet lineaire faseresponse wilt namenlijk zeggen dat er vervorming zal optreden. Magnitude en fase kunnen beide bij de FIR onafhankelijk van elkaar bepaald worden.
 
 
+
+[LD_coeff, amplitude, frequentie] = wfir('lp',80,[750/Fss, 0],'hm',[0 0]);
+
+LD_coeff
+time domain filter coefficients
+
+amplitude
+frequency domain filter response on the grid fr
+
+frequentie
+Frequency grid
+
+  Parameters van wfir()
+  • ‘lp’ : laagdoorlaatfilter
+  • 80 : orde filter
+  • [750/Fss, 0] : bandbreedte (tussen  (750/16000)Hz en 0 Hz;
+  750 >>> periodes per seconde 16000samples per seconde. 750/16000 = cut off frequentie 
+  • ‘hm’ : hamming window
+  • [0 0] parameters voor hamming window
+  
+  
+LD_polynoom = poly(LD_coeff, 'z', 'coeff');
+LD_functie = horner(LD_polynoom, 1/%z);
+LD_lineair_system = syslin('d', LD_functie);
+LD_output = flts(testsign, LD_lineair_system);
+
+
+
 #Wav generatie
 ##Scilab
 De liedjes die we gaan filteren in Scilab zullen  de extentie .wav hebben. Dit om de eenvoudige rede dat scilab een functie heeft genaamd Wavread. Hiermee kan je makelijk wav files uitlezen. MP3 uitlezen in scilab is veel moeilijker, hier zijn speciale encoders voor nodig (mp3 is ook geen vrije licentie). We gaan het onzelf niet onnodig moeilijk maken en kiezen daarom voor .wav bestanden. 
