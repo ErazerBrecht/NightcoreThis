@@ -1,5 +1,5 @@
 Fss = 16000; //the bitrate of the song
-Speed = 1.3; //how fast the song will be played
+Speed = 1; //how fast the song will be played
 
 [testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest2(anja).wav"); //reading the wav (music) file in a matrix
  //[testsign,Fs,bits]=wavread("SCI/modules/sound/demos/filterTest1(H-style).wav");
