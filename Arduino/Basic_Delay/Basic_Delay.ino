@@ -1,7 +1,7 @@
 /*
 ------- 12-BIT 44100 kHz REAL-TIME AUDIO DELAY EFFECT -------
 Designed for the ARDUINO DUE - by Robert FK Triggs, 30th July 2014
-Edited by Brecht Carlier; 5th January 2015 (Added second delay)
+Edited by Brecht Carlier; 5th January 2016 (Added second delay)
 */
 
 #include <ADC_DAC_Timer.h>
